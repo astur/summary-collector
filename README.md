@@ -16,9 +16,26 @@ npm i summary-collector
 ```js
 const {collect, summary} = require('summary-collector')();
 
-collect({val1: 1, val2: 2});
+collect({a: 4});
+collect({a: 1});
+collect({a: 3});
+collect({a: 5});
+collect({a: 2});
 
 console.log(summary());
+
+/*
+{
+    a: {
+        min: 1,
+        max: 5,
+        sum: 15,
+        len: 5,
+        avg: 3,
+    },
+}
+*/
+
 ```
 
 ## License
