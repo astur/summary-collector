@@ -1,13 +1,14 @@
 const test = require('ava');
-const {collect, summary} = require('.')();
 
 test('keys', t => {
+    const {collect, summary} = require('.')();
     collect({a: 1, b: 2});
     collect({c: 1, d: 2});
     t.deepEqual(Object.keys(summary()), ['a', 'b', 'c', 'd']);
 });
 
 test('base', t => {
+    const {collect, summary} = require('.')();
     collect({a: 4});
     collect({a: 1});
     collect({a: 3});
