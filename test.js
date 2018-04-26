@@ -1,7 +1,8 @@
 const test = require('ava');
-const m = require('.');
+const {collect, summary} = require('.')();
 
-test('summary-collector', t => {
-    t.true(true);
-    t.is(m, m);
+test('base', t => {
+    collect({a: 1, b: 2});
+    collect({c: 1, d: 2});
+    t.deepEqual(Object.keys(summary()), ['a', 'b', 'c', 'd']);
 });
