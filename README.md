@@ -14,7 +14,7 @@ npm i summary-collector
 ## Usage
 
 ```js
-const {collect, summary} = require('summary-collector');
+const {collect, summary} = require('summary-collector')();
 
 collect({val1: 1, val2: 2});
 
