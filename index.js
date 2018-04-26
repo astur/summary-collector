@@ -1,3 +1,6 @@
+const smry = require('smry');
+const mapObj = require('map-obj');
+
 module.exports = () => {
     const store = {};
     return {
@@ -7,6 +10,6 @@ module.exports = () => {
                 store[key].push(o[key]);
             });
         },
-        summary: () => store,
+        summary: () => mapObj(store, (key, val) => [key, smry(val)]),
     };
 };
