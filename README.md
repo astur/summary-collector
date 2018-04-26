@@ -1,6 +1,6 @@
 # summary-collector
 
-summary-collector description here
+Easy summary collector
 
 [![Build Status][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
@@ -14,7 +14,11 @@ npm i summary-collector
 ## Usage
 
 ```js
-const summary-collector = require('summary-collector');
+const {collect, summary} = require('summary-collector');
+
+collect({val1: 1, val2: 2});
+
+console.log(summary());
 ```
 
 ## License
