@@ -2,7 +2,7 @@
   "private": true,
   "name": "summary-collector",
   "version": "0.0.0",
-  "description": "",
+  "description": "Easy summary collector",
   "main": "index.js",
   "author": "astur <astur@yandex.ru> (http://kozlov.am/)",
   "scripts": {
@@ -21,7 +21,8 @@
     "eslint-config-astur": "0.0.2"
   },
   "keywords": [
-    "summary-collector"
+    "summary",
+    "collector"
   ],
   "license": "MIT"
 }
