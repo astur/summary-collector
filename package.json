@@ -15,6 +15,10 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "dependencies": {
+    "map-obj": "^2.0.0",
+    "smry": "^1.0.0"
+  },
   "devDependencies": {
     "ava": "^0.22.0",
     "eslint": "^4.7.2",
