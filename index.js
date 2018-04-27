@@ -3,7 +3,10 @@ const mapObj = require('map-obj');
 const type = require('easytype');
 const arfy = require('arfy');
 
-module.exports = ({store = {}} = {}) => ({
+module.exports = ({
+    store = {},
+    quantile = [],
+} = {}) => ({
     collect: (o, ...args) => {
         if(!type.isObject(o)) o = {[o]: arfy(...args)};
         Object.keys(o).forEach(key => {
@@ -13,5 +16,6 @@ module.exports = ({store = {}} = {}) => ({
             store[key] = [...store[key], ...vals];
         });
     },
-    summary: () => mapObj(store, (key, val) => [key, smry(val)]),
+    summary: () => mapObj(store, (key, val) =>
+        [key, smry(val, {quantile: arfy(quantile).filter(type.isNumber.finite)})]),
 });
