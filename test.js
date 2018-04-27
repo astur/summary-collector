@@ -57,3 +57,8 @@ test('ignore bad values', t => {
     collect('b', null, [true, undefined], '1');
     t.deepEqual(summary(), {a: {min: 1, max: 1, sum: 1, len: 1, avg: 1}});
 });
+
+test('initial store', t => {
+    const {summary} = require('.')({store: {a: [1, 2, 3, 4, 5]}});
+    t.deepEqual(summary().a, {min: 1, max: 5, sum: 15, len: 5, avg: 3});
+});
