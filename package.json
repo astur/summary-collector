@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "arfy": "0.0.2",
-    "easytype": "0.0.4",
+    "easytype": "0.0.5",
     "map-obj": "^2.0.0",
     "smry": "^1.0.0"
   },
