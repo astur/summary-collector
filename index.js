@@ -7,7 +7,7 @@ module.exports = () => {
         collect: o => {
             Object.keys(o).forEach(key => {
                 if(!store[key]) store[key] = [];
-                store[key].push(o[key]);
+                store[key] = [].concat(store[key], o[key]);
             });
         },
         summary: () => mapObj(store, (key, val) => [key, smry(val)]),
