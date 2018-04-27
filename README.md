@@ -16,11 +16,12 @@ npm i summary-collector
 ```js
 const {collect, summary} = require('summary-collector')();
 
-collect({a: 4});
-collect({a: 1});
-collect({a: 3});
-collect({a: 5});
-collect({a: 2});
+collect({a: 1, b: true});
+collect({a: [2]});
+collect('a', 3, [4, 5]});
+collect('b', null, ['1', NaN]});
+
+// summary for 'b' is empty cause non-numbers are ignored
 
 console.log(summary());
 
