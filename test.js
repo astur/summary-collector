@@ -62,3 +62,9 @@ test('initial store', t => {
     const {summary} = require('.')({store: {a: [1, 2, 3, 4, 5]}});
     t.deepEqual(summary().a, {min: 1, max: 5, sum: 15, len: 5, avg: 3});
 });
+
+test('quantile', t => {
+    const {collect, summary} = require('.')({quantile: [0.25, 0.5, 0.75, 'bad']});
+    collect('a', 1, 2, 3, 4);
+    t.deepEqual(summary().a.quantile, {0.25: 1.25, 0.5: 2.5, 0.75: 3.75});
+});
