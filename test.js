@@ -50,3 +50,10 @@ test('key, ...numbers&arrays', t => {
     collect('a', [4, 1], 3, [5], 2);
     t.deepEqual(summary().a, {min: 1, max: 5, sum: 15, len: 5, avg: 3});
 });
+
+test('ignore bad values', t => {
+    const {collect, summary} = require('.')();
+    collect('a', 1, false, NaN, /^$/, {});
+    collect('b', null, [true, undefined], '1');
+    t.deepEqual(summary(), {a: {min: 1, max: 1, sum: 1, len: 1, avg: 1}});
+});
