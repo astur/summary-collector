@@ -9,10 +9,10 @@ module.exports = () => {
         collect: (o, ...args) => {
             if(!type.isObject(o)) o = {[o]: arfy(...args)};
             Object.keys(o).forEach(key => {
-                o[key] = arfy(o[key]).filter(type.isNumber.finite);
-                if(!o[key].length) return;
+                const vals = arfy(o[key]).filter(type.isNumber.finite);
+                if(!vals.length) return;
                 if(!store[key]) store[key] = [];
-                store[key] = [].concat(store[key], o[key]);
+                store[key] = [...store[key], ...vals];
             });
         },
         summary: () => mapObj(store, (key, val) => [key, smry(val)]),
