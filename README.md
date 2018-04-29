@@ -62,6 +62,15 @@ console.log(summary());
 
 `quantile` - option for [smry](https://github.com/astur/smry). Same syntax.
 
+### memory usage tip:
+
+If `quantile` option is not set - summaries are computing incrementally without storing full arrays in memory. So, if you expect really big arrays, and if you need quantiles only for certain arrays (not for all), it is good idea to use separate pairs of functions. Something like this:
+
+```js
+const {collect, summary} = require('summary-collector')(); //save memory
+const {collectQ, summaryQ} = require('summary-collector')({quantile: 0.95});
+```
+
 ## License
 
 MIT
