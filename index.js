@@ -2,6 +2,7 @@ const smry = require('smry');
 const type = require('easytype');
 const arfy = require('arfy');
 const mapObj = require('lodash.mapvalues');
+const transformObj = require('lodash.transform');
 
 const toFNA = v => arfy(v).filter(type.isNumber.finite);
 const incSmry = (o, a) => {
@@ -20,8 +21,10 @@ module.exports = ({
     quantile = [],
 } = {}) => {
     quantile = toFNA(quantile);
-    store = mapObj(store, val =>
-        quantile.length ? val : smry(val));
+    store = type.isObject(store) ? transformObj(store, (r, v, k, o) => {
+        v = toFNA(v);
+        if(v.length) r[k] = quantile.length ? v : smry(v);
+    }) : {};
     return {
         collect: (o, ...args) => {
             if(!type.isObject(o)) o = {[o]: arfy(...args)};
