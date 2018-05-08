@@ -28,12 +28,9 @@ module.exports = ({
             Object.keys(o).forEach(key => {
                 const vals = toFNA(o[key]);
                 if(!vals.length) return;
-                const first = !Object.keys(store).includes(key);
-                if(quantile.length){
-                    store[key] = first ? vals : [...store[key], ...vals];
-                } else {
-                    store[key] = incSmry(store[key], vals);
-                }
+                store[key] = quantile.length ?
+                    [...store[key] || [], ...vals] :
+                    incSmry(store[key], vals);
             });
         },
         summary: () => mapObj(store, (key, val) => [
