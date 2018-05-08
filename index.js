@@ -3,18 +3,20 @@ const mapObj = require('map-obj');
 const type = require('easytype');
 const arfy = require('arfy');
 
+const toFNA = v => arfy(v).filter(type.isNumber.finite);
+
 module.exports = ({
     store = {},
     quantile = [],
 } = {}) => {
-    quantile = arfy(quantile).filter(type.isNumber.finite);
+    quantile = toFNA(quantile);
     store = mapObj(store, (key, val) =>
         [key, quantile.length ? val : smry(val)]);
     return {
         collect: (o, ...args) => {
             if(!type.isObject(o)) o = {[o]: arfy(...args)};
             Object.keys(o).forEach(key => {
-                const vals = arfy(o[key]).filter(type.isNumber.finite);
+                const vals = toFNA(o[key]);
                 if(!vals.length) return;
                 const first = !Object.keys(store).includes(key);
                 if(quantile.length){
