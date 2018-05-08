@@ -4,6 +4,16 @@ const type = require('easytype');
 const arfy = require('arfy');
 
 const toFNA = v => arfy(v).filter(type.isNumber.finite);
+const incSmry = (o, a) => {
+    const res = smry(a);
+    if(!o) return res;
+    res.min = Math.min(res.min, o.min);
+    res.max = Math.max(res.max, o.max);
+    res.sum += o.sum;
+    res.len += o.len;
+    res.avg = res.sum / res.len;
+    return res;
+};
 
 module.exports = ({
     store = {},
@@ -22,15 +32,7 @@ module.exports = ({
                 if(quantile.length){
                     store[key] = first ? vals : [...store[key], ...vals];
                 } else {
-                    const sum = vals.reduce((a, b) => a + b, 0) + (first ? 0 : store[key].sum);
-                    const len = vals.length + (first ? 0 : store[key].len);
-                    store[key] = {
-                        min: Math.min(...first ? vals : [store[key].min, ...vals]),
-                        max: Math.max(...first ? vals : [store[key].max, ...vals]),
-                        sum,
-                        len,
-                        avg: sum / len,
-                    };
+                    store[key] = incSmry(store[key], vals);
                 }
             });
         },
