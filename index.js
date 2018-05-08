@@ -18,8 +18,7 @@ module.exports = ({
                 if(!vals.length) return;
                 const first = !Object.keys(store).includes(key);
                 if(quantile.length){
-                    if(first) store[key] = [];
-                    store[key] = [...store[key], ...vals];
+                    store[key] = first ? vals : [...store[key], ...vals];
                 } else {
                     const sum = vals.reduce((a, b) => a + b, 0) + (first ? 0 : store[key].sum);
                     const len = vals.length + (first ? 0 : store[key].len);
