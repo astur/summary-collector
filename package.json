@@ -18,6 +18,7 @@
     "arfy": "0.0.2",
     "easytype": "0.0.5",
     "lodash.mapvalues": "^4.6.0",
+    "lodash.transform": "^4.6.0",
     "smry": "^1.0.0"
   },
   "devDependencies": {
