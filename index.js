@@ -3,6 +3,7 @@ const type = require('easytype');
 const arfy = require('arfy');
 const mapObj = require('lodash.mapvalues');
 const transformObj = require('lodash.transform');
+const zipObject = require('lodash.zipobject');
 
 const toFNA = v => arfy(v).filter(type.isNumber.finite);
 const incCounter = (c, a) => {
@@ -37,6 +38,7 @@ module.exports = ({
         }
         if(v.length) r[k] = quantile.length ? v : smry(v);
     });
+    store = Object.assign(zipObject(counters, Array(counters.length).fill(0)), store);
     return {
         collect: (o, ...args) => {
             if(!type.isObject(o)) o = {[o]: arfy(...args)};
