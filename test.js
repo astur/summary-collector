@@ -68,3 +68,11 @@ test('quantile', t => {
     collect('a', 1, 2, 3, 4);
     t.deepEqual(summary().a.quantile, {0.25: 1.25, 0.5: 2.5, 0.75: 3.75});
 });
+
+test('counters', t => {
+    const {collect, summary} = require('.')({counters: ['a', 'c'], store: {a: [1, 2]}});
+    collect('a', 3, 4, 5);
+    collect('b', 1, 2, 3, 4, 5);
+    t.is(summary().a, 15);
+    t.deepEqual(summary(), {a: 15, b: {min: 1, max: 5, sum: 15, len: 5, avg: 3}});
+});
