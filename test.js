@@ -61,6 +61,7 @@ test('ignore bad values', t => {
 test('initial store', t => {
     const {summary} = require('.')({store: {a: [1, 2, 3, 4, 5, null], b: 'bad'}});
     t.deepEqual(summary(), {a: {min: 1, max: 5, sum: 15, len: 5, avg: 3}});
+    t.deepEqual(require('.')({store: 'bad'}).summary(), {});
 });
 
 test('quantile', t => {
