@@ -74,5 +74,5 @@ test('counters', t => {
     collect('a', 3, 4, 5);
     collect('b', 1, 2, 3, 4, 5);
     t.is(summary().a, 15);
-    t.deepEqual(summary(), {a: 15, b: {min: 1, max: 5, sum: 15, len: 5, avg: 3}});
+    t.deepEqual(summary(), {a: 15, b: {min: 1, max: 5, sum: 15, len: 5, avg: 3}, c: 0});
 });
