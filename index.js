@@ -30,7 +30,7 @@ module.exports = ({
     counters = arfy(counters);
     store = type.isObject(store) ? transformObj(store, (r, v, k) => {
         v = toFNA(v);
-        if(v.length) r[k] = counters.includes(k) ? v.reduce((x, y) => x + y, 0) : quantile.length ? v : smry(v);
+        if(v.length) r[k] = counters.includes(k) ? incCounter(null, v) : quantile.length ? v : smry(v);
     }) : {};
     return {
         collect: (o, ...args) => {
@@ -39,7 +39,7 @@ module.exports = ({
                 const vals = toFNA(o[key]);
                 if(!vals.length) return;
                 store[key] = counters.includes(key) ? incCounter(store[key], vals) :
-                    quantile.length ? //
+                    quantile.length ?
                         [...store[key] || [], ...vals] :
                         incSmry(store[key], vals);
             });
