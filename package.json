@@ -1,6 +1,6 @@
 {
   "name": "summary-collector",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Easy summary collector",
   "main": "index.js",
   "author": "astur <astur@yandex.ru> (http://kozlov.am/)",
