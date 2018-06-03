@@ -60,6 +60,8 @@ console.log(summary());
 
 `store` - initial store (as object with named arrays of numbers).
 
+`counters` - array of store keys, for wich only `sum` will computed (and stored/returned as number).
+
 `quantile` - option for [smry](https://github.com/astur/smry). Same syntax.
 
 ### memory usage tip:
