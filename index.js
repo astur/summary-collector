@@ -28,10 +28,15 @@ module.exports = ({
 } = {}) => {
     quantile = toFNA(quantile);
     counters = arfy(counters);
-    store = type.isObject(store) ? transformObj(store, (r, v, k) => {
+    if(!type.isObject(store)) store = {};
+    store = transformObj(store, (r, v, k) => {
         v = toFNA(v);
-        if(v.length) r[k] = counters.includes(k) ? incCounter(null, v) : quantile.length ? v : smry(v);
-    }) : {};
+        if(counters.includes(k)){
+            r[k] = incCounter(null, v);
+            return;
+        }
+        if(v.length) r[k] = quantile.length ? v : smry(v);
+    });
     return {
         collect: (o, ...args) => {
             if(!type.isObject(o)) o = {[o]: arfy(...args)};
