@@ -15,18 +15,18 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "arfy": "0.0.2",
-    "easytype": "0.0.5",
+    "arfy": "^1.0.0",
+    "easytype": "^1.0.0",
     "lodash.mapvalues": "^4.6.0",
     "lodash.transform": "^4.6.0",
     "lodash.zipobject": "^4.1.3",
-    "smry": "^1.0.0"
+    "smry": "^1.0.1"
   },
   "devDependencies": {
-    "ava": "^0.22.0",
+    "ava": "^0.25.0",
     "eslint": "^4.7.2",
     "eslint-config-astur": "0.0.2",
-    "nyc": "^12.0.1"
+    "nyc": "^12.0.2"
   },
   "keywords": [
     "summary",
