@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: off */
 const smry = require('smry');
 const type = require('easytype');
 const arfy = require('arfy');
@@ -36,7 +37,7 @@ module.exports = ({
             r[k] = incCounter(null, v);
             return;
         }
-        if(v.length) r[k] = quantile.length ? v : smry(v);
+        if(v.length > 0) r[k] = quantile.length > 0 ? v : smry(v);
     });
     store = Object.assign(zipObject(counters, Array(counters.length).fill(0)), store);
     return {
@@ -44,15 +45,15 @@ module.exports = ({
             if(!type.isObject(o)) o = {[o]: arfy(...args)};
             Object.keys(o).forEach(key => {
                 const vals = toFNA(o[key]);
-                if(!vals.length) return;
+                if(!vals.length > 0) return;
                 store[key] = counters.includes(key) ? incCounter(store[key], vals) :
-                    quantile.length ?
+                    quantile.length > 0 ?
                         [...store[key] || [], ...vals] :
                         incSmry(store[key], vals);
             });
         },
         summary: () => mapObj(store, (val, key) => counters.includes(key) ? val :
-            quantile.length ?
+            quantile.length > 0 ?
                 smry(val, {quantile}) :
                 mapObj(val, v => +v.toFixed(10))),
     };
