@@ -1,4 +1,3 @@
-/* eslint no-param-reassign: off */
 const smry = require('smry');
 const type = require('easytype');
 const arfy = require('arfy');
@@ -28,33 +27,34 @@ module.exports = ({
     quantile = [],
     counters = [],
 } = {}) => {
-    quantile = toFNA(quantile);
-    counters = arfy(counters);
-    if(!type.isObject(store)) store = {};
-    store = transformObj(store, (r, v, k) => {
-        v = toFNA(v);
-        if(counters.includes(k)){
-            r[k] = incCounter(null, v);
+    const q = toFNA(quantile);
+    const c = arfy(counters);
+    let s = type.isObject(store) ? store : {};
+    s = transformObj(s, (r, v, k) => {
+        const val = toFNA(v);
+        if(c.includes(k)){
+            r[k] = incCounter(null, val);
             return;
         }
-        if(v.length > 0) r[k] = quantile.length > 0 ? v : smry(v);
+        if(val.length > 0) r[k] = q.length > 0 ? val : smry(val);
     });
-    store = Object.assign(zipObject(counters, Array(counters.length).fill(0)), store);
+    s = Object.assign(zipObject(c, Array(c.length).fill(0)), s);
     return {
         collect: (o, ...args) => {
-            if(!type.isObject(o)) o = {[o]: arfy(...args)};
-            Object.keys(o).forEach(key => {
-                const vals = toFNA(o[key]);
+            const obj = type.isObject(o) ? o : {[o]: arfy(...args)};
+            // if(!type.isObject(o)) o = {[o]: arfy(...args)};
+            Object.keys(obj).forEach(key => {
+                const vals = toFNA(obj[key]);
                 if(!vals.length > 0) return;
-                store[key] = counters.includes(key) ? incCounter(store[key], vals) :
-                    quantile.length > 0 ?
-                        [...store[key] || [], ...vals] :
-                        incSmry(store[key], vals);
+                s[key] = c.includes(key) ? incCounter(s[key], vals) :
+                    q.length > 0 ?
+                        [...s[key] || [], ...vals] :
+                        incSmry(s[key], vals);
             });
         },
-        summary: () => mapObj(store, (val, key) => counters.includes(key) ? val :
-            quantile.length > 0 ?
-                smry(val, {quantile}) :
+        summary: () => mapObj(s, (val, key) => c.includes(key) ? val :
+            q.length > 0 ?
+                smry(val, {quantile: q}) :
                 mapObj(val, v => +v.toFixed(10))),
     };
 };
